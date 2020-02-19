@@ -3,14 +3,6 @@ import axios from "axios";
 const apiPath = "https://api.themoviedb.org/3";
 const apiToken = "96d9ff74ca950bb80074450659529bbc";
 
-//actions
-export function addData(payload) {
-  return {
-    type: "addData",
-    payload: payload
-  };
-}
-
 //functions
 export function fetchSearchMovie(searchString, page) {
   return function(dispatch) {
