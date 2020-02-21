@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchGenreList } from "../store/fetch";
 import Header from "../components/header/header";
 import Input from "../components/input/input";
+import MovieCard from "../components/movieCard/index";
 
 const mapStateToProps = state => {
   return {
@@ -23,7 +24,7 @@ export class Dashboard extends React.Component {
       <>
         <Header />
         <Input />
-        <h2>dasd</h2>
+        <MovieCard />
       </>
     );
   }

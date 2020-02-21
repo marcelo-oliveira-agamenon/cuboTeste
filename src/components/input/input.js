@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { ContainerInput, TextInput } from "./style";
+import { ContainerInput, TextInput } from "./styles";
 import { fetchSearchMovie, fetchGenreMovie } from "../../store/fetch";
 
 const mapStateToProps = state => {
@@ -12,33 +12,39 @@ const mapStateToProps = state => {
   };
 };
 
-export function Input(props) {
-  const [genreList, setGenreList] = useState();
-  const [valueInput, setValueInput] = useState("");
-
-  const handleChange = event => {
-    setValueInput(event.target.value);
+export class Input extends React.Component {
+  state = {
+    data: {},
+    valueInput: ""
   };
 
-  useEffect(() => {
-    if (valueInput !== "") {
-      fetchSearchMovie(valueInput, 1);
+  handleKeyPress = event => {
+    if (event.key === "Enter") {
+      this.props.fetchSearchMovie(this.state.valueInput, 1);
     }
-  }, [valueInput]);
+  };
 
-  return (
-    <>
-      {console.log("input", props)}
-      <ContainerInput>
-        <TextInput
-          type="text"
-          name="search"
-          value={valueInput}
-          onChange={handleChange}
-        />
-      </ContainerInput>
-    </>
-  );
+  handleChange = event => {
+    this.setState({ valueInput: event.target.value });
+  };
+
+  render() {
+    return (
+      <>
+        {console.log("input", this.props)}
+        <ContainerInput>
+          <TextInput
+            type="text"
+            name="search"
+            value={this.state.valueInput}
+            onChange={this.handleChange}
+            onKeyDown={this.handleKeyPress}
+            placeholder={"Busque um filme por nome ou gênero..."}
+          />
+        </ContainerInput>
+      </>
+    );
+  }
 }
 
 export default connect(mapStateToProps, {
