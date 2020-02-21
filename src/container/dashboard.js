@@ -20,11 +20,24 @@ export class Dashboard extends React.Component {
   }
 
   render() {
+    let arrayResultMovie;
+    if (this.props.searchMovie.length !== 0) {
+      arrayResultMovie = this.props.searchMovie[0].results;
+    }
     return (
       <>
         <Header />
         <Input />
-        <MovieCard />
+        {this.props.searchMovie.length !== 0
+          ? arrayResultMovie.map(movie => {
+              return (
+                <MovieCard
+                  data={movie}
+                  genreList={this.props.genreList[0].genres}
+                />
+              );
+            })
+          : console.log("sad")}
       </>
     );
   }
