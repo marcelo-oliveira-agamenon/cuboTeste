@@ -73,6 +73,7 @@ export const GenreTagMovieDiv = styled.div`
 export const SecondDiv = styled.div`
   display: flex;
   flex-direction: column;
+  width: 65vw;
 `;
 
 export const ThirdDiv = styled.div`

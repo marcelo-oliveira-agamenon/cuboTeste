@@ -16,6 +16,7 @@ import {
   ImageTag
 } from "./styles";
 import { Link } from "react-router-dom";
+import Loader from "react-loader-spinner";
 
 export function MovieCard(props) {
   const genres = props.genreList.filter(genre => {
@@ -29,48 +30,63 @@ export function MovieCard(props) {
     props.data.vote_average !== 0 ? props.data.vote_average * 10 + " %" : "N/A";
   return (
     <ContainerMovieCard>
-      <ContainerDiv>
-        <DivImage>
-          <ImageTag
-            src={"http://image.tmdb.org/t/p/w185/" + props.data.poster_path}
-            alt="poster Movie"
-          />
-        </DivImage>
-        <SecondDiv>
-          <ThirdDiv>
-            <PopularityMovie>{popularity}</PopularityMovie>
-            <TitleMovie>{props.data.title}</TitleMovie>
-          </ThirdDiv>
-          <ReleaseDateMovie>{props.data.release_date}</ReleaseDateMovie>
-          <FourDiv>
-            <DescriptionMovie>
-              {props.data.overview === ""
-                ? "Não há descrição para este filme"
-                : props.data.overview}
-            </DescriptionMovie>
-            <FiveDiv>
-              {genres.map(genre => {
-                return (
-                  <GenreTagMovieDiv key={genre.id}>
-                    <GenreTagMovie>{genre.name}</GenreTagMovie>
-                  </GenreTagMovieDiv>
-                );
-              })}
-            </FiveDiv>
-          </FourDiv>
-        </SecondDiv>
-      </ContainerDiv>
-      <Link
-        to={{
-          pathname: "/movie",
-          state: {
-            dataMovie: props.data,
-            genreList: genres
-          }
-        }}
-      >
-        <button>das</button>
-      </Link>
+      {props.data === undefined || props.genreList.length === 0 ? (
+        <Loader type="Oval" color="#1661b3" height={"5vh"} width={"5vw"} />
+      ) : (
+        <Link
+          to={{
+            pathname: "/movie",
+            state: {
+              dataMovie: props.data,
+              genreList: genres
+            }
+          }}
+          style={{ textDecoration: "none" }}
+        >
+          <ContainerDiv>
+            <DivImage>
+              {props.data.poster_path === undefined ? (
+                <Loader
+                  type="Oval"
+                  color="#1661b3"
+                  height={"5vh"}
+                  width={"5vw"}
+                />
+              ) : (
+                <ImageTag
+                  src={
+                    "http://image.tmdb.org/t/p/w185/" + props.data.poster_path
+                  }
+                  alt="poster Movie"
+                />
+              )}
+            </DivImage>
+            <SecondDiv>
+              <ThirdDiv>
+                <PopularityMovie>{popularity}</PopularityMovie>
+                <TitleMovie>{props.data.title}</TitleMovie>
+              </ThirdDiv>
+              <ReleaseDateMovie>{props.data.release_date}</ReleaseDateMovie>
+              <FourDiv>
+                <DescriptionMovie>
+                  {props.data.overview === ""
+                    ? "Não há descrição para este filme"
+                    : props.data.overview}
+                </DescriptionMovie>
+                <FiveDiv>
+                  {genres.map(genre => {
+                    return (
+                      <GenreTagMovieDiv key={genre.id}>
+                        <GenreTagMovie>{genre.name}</GenreTagMovie>
+                      </GenreTagMovieDiv>
+                    );
+                  })}
+                </FiveDiv>
+              </FourDiv>
+            </SecondDiv>
+          </ContainerDiv>
+        </Link>
+      )}
     </ContainerMovieCard>
   );
 }
