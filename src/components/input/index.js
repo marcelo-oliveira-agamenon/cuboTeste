@@ -12,14 +12,33 @@ const mapStateToProps = state => {
   };
 };
 
+let genreDecision = false;
+let genreID;
+
 export class Input extends React.Component {
   state = {
     valueInput: ""
   };
 
   handleKeyPress = event => {
+    this.props.genreList.genres.map(genre => {
+      if (this.state.valueInput === genre.name) {
+        genreDecision = true;
+        genreID = genre.id;
+      }
+    });
     if (event.key === "Enter") {
-      this.props.fetchSearchMovie(this.state.valueInput, 1);
+      if (genreDecision) {
+        this.props.fetchGenreMovie(genreID, 2).then(() => {
+          this.props.onChange("genre");
+        });
+        genreDecision = false;
+      } else {
+        this.props.fetchSearchMovie(this.state.valueInput, 1).then(() => {
+          this.props.onChange("search");
+        });
+        genreDecision = false;
+      }
     }
   };
 

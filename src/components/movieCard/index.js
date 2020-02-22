@@ -60,6 +60,17 @@ export function MovieCard(props) {
           </FourDiv>
         </SecondDiv>
       </ContainerDiv>
+      <Link
+        to={{
+          pathname: "/movie",
+          state: {
+            dataMovie: props.data,
+            genreList: genres
+          }
+        }}
+      >
+        <button>das</button>
+      </Link>
     </ContainerMovieCard>
   );
 }

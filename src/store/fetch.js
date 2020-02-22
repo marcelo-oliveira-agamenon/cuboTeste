@@ -64,3 +64,22 @@ export function fetchGenreMovie(idGenre, page) {
       });
   };
 }
+
+export function fetchMovieDetails(movieID) {
+  return function(dispatch) {
+    return axios
+      .get(`${apiPath}/movie/${movieID}?api_key=${apiToken}&language=pt-BR`)
+      .then(response => {
+        dispatch({
+          type: "movieDetails",
+          payload: response.data
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: "error",
+          payload: error
+        });
+      });
+  };
+}

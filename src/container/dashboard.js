@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchGenreList } from "../store/fetch";
-import Header from "../components/header/header";
-import Input from "../components/input/input";
+import Header from "../components/header/index";
+import Input from "../components/input/index";
 import MovieCard from "../components/movieCard/index";
 
 const mapStateToProps = state => {
@@ -14,31 +14,42 @@ const mapStateToProps = state => {
   };
 };
 
+let arrayResultMovie;
+
 export class Dashboard extends React.Component {
+  state = {
+    type: ""
+  };
   componentDidMount() {
     this.props.fetchGenreList();
   }
 
-  render() {
-    let arrayResultMovie;
-    if (this.props.searchMovie.length !== 0) {
-      arrayResultMovie = this.props.searchMovie[0].results;
+  handleChange = value => {
+    if (value === "search") {
+      arrayResultMovie = this.props.searchMovie.results;
+      this.setState({ type: value });
+    } else if (value === "genre") {
+      arrayResultMovie = this.props.dataMovie.results;
+      this.setState({ type: value });
     }
+  };
+
+  render() {
     return (
       <>
         <Header />
-        <Input />
-        {this.props.searchMovie.length !== 0
+        <Input onChange={value => this.handleChange(value)} />
+        {this.state.type !== ""
           ? arrayResultMovie.map(movie => {
               return (
                 <MovieCard
                   key={movie.id}
                   data={movie}
-                  genreList={this.props.genreList[0].genres}
+                  genreList={this.props.genreList.genres}
                 />
               );
             })
-          : console.log("sad")}
+          : undefined}
       </>
     );
   }
