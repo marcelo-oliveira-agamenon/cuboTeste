@@ -56,7 +56,7 @@ export class Input extends React.Component {
             value={this.state.valueInput}
             onChange={this.handleChange}
             onKeyDown={this.handleKeyPress}
-            placeholder={"Busque um filme por nome ou gênero..."}
+            placeholder={"Busque um filme por nome ou gênero ..."}
           />
         </ContainerInput>
       </>

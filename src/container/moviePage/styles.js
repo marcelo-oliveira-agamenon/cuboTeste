@@ -39,14 +39,14 @@ export const TitleMovie = styled.h1`
 
 export const DescriptionTitle = styled.h2`
   font-family: Lato, sans-serif;
-  font-size: 0.8vw;
-  color: #959393;
+  font-size: 1vw;
+  color: #1661b3;
   margin: 3vh 0 3vh 0;
 `;
 
 export const DescriptionMovie = styled.p`
   font-family: Lato, sans-serif;
-  font-size: 0.8vw;
+  font-size: 0.9vw;
   font-weight: 500;
   margin: 0;
   color: #959393;
@@ -62,7 +62,7 @@ export const ReleaseDataMovie = styled.p`
 
 export const GenreTagMovie = styled.h5`
   font-family: Abel, sans-serif;
-  font-size: 0.7vw;
+  font-size: 0.9vw;
   color: #1661b3;
   font-weight: 200;
   margin-top: 1vh;
@@ -93,13 +93,13 @@ export const InfoTitle = styled.h3`
   font-family: Abel, sans-serif;
   color: #1661b3;
   margin: 0;
-  font-size: 0.9vw;
+  font-size: 1.1vw;
 `;
 
 export const InfoTitleResponse = styled.h4`
   font-family: Abel, sans-serif;
   color: #959393;
-  font-size: 0.6vw;
+  font-size: 0.8vw;
 `;
 
 export const PopularityMovie = styled.h5`
@@ -132,4 +132,11 @@ export const DivLine1 = styled.div`
   display: inline-flex;
 `;
 
-export const DivLine2 = styled.div``;
+export const DivLine2 = styled.div`
+  margin-left: 45vw;
+`;
+
+export const LineSeparator = styled.hr`
+  border: 0;
+  border-top: 2px solid #63eadf;
+`;

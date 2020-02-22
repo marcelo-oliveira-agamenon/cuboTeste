@@ -17,6 +17,7 @@ import {
 } from "./styles";
 import { Link } from "react-router-dom";
 import Loader from "react-loader-spinner";
+import moment from "moment";
 
 export function MovieCard(props) {
   const genres = props.genreList.filter(genre => {
@@ -28,6 +29,7 @@ export function MovieCard(props) {
   });
   const popularity =
     props.data.vote_average !== 0 ? props.data.vote_average * 10 + " %" : "N/A";
+  const dateFormat = moment(props.data.release_date).format("DD/MM/YYYY");
   return (
     <ContainerMovieCard>
       {props.data === undefined || props.genreList.length === 0 ? (
@@ -66,7 +68,7 @@ export function MovieCard(props) {
                 <PopularityMovie>{popularity}</PopularityMovie>
                 <TitleMovie>{props.data.title}</TitleMovie>
               </ThirdDiv>
-              <ReleaseDateMovie>{props.data.release_date}</ReleaseDateMovie>
+              <ReleaseDateMovie>{dateFormat}</ReleaseDateMovie>
               <FourDiv>
                 <DescriptionMovie>
                   {props.data.overview === ""

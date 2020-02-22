@@ -21,7 +21,8 @@ import {
   SubTitleDiv2,
   DivBlock,
   DivLine1,
-  DivLine2
+  DivLine2,
+  LineSeparator
 } from "./styles";
 import moment from "moment";
 import { connect } from "react-redux";
@@ -47,7 +48,7 @@ export class MoviePage extends React.Component {
     const dateLaunch =
       movieDetails.status === "Released" ? "Lançado" : "Não Lançado";
     const releaseDateFormat = moment(dataMovie.release_date).format(
-      "DD-MM-YYYY"
+      "DD/MM/YYYY"
     );
     let hours = Math.floor(movieDetails.runtime / 60);
     let minutes = movieDetails.runtime % 60;
@@ -56,7 +57,7 @@ export class MoviePage extends React.Component {
       dataMovie.vote_average !== 0 ? dataMovie.vote_average * 10 + " %" : "N/A";
     return (
       <>
-        <Header />
+        <Header isMoviePage={true} />
         {dataMovie === undefined || movieDetails === undefined ? (
           <Loader type="Oval" color="#1661b3" height={"5vh"} width={"5vw"} />
         ) : (
@@ -74,6 +75,7 @@ export class MoviePage extends React.Component {
             <PreviewDiv>
               <DivBlock>
                 <DescriptionTitle>Sinopse</DescriptionTitle>
+                <LineSeparator />
                 <DescriptionMovie>
                   {dataMovie.overview === ""
                     ? "Não há descrição para este filme"
@@ -81,6 +83,7 @@ export class MoviePage extends React.Component {
                 </DescriptionMovie>
 
                 <DescriptionTitle>Informações</DescriptionTitle>
+                <LineSeparator />
                 <InfoDiv>
                   <InfoComponentDiv>
                     <InfoTitle>Situação</InfoTitle>

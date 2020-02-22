@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const ContainerMovieCard = styled.div`
   margin-top: 5vh;
   margin-left: 18vw;
+  margin-bottom: 3vh;
   width: 65vw;
   background-color: #f3f5f5;
 `;

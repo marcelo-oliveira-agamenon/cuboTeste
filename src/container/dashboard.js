@@ -4,6 +4,7 @@ import { fetchGenreList } from "../store/fetch";
 import Header from "../components/header/index";
 import Input from "../components/input/index";
 import MovieCard from "../components/movieCard/index";
+import Pagination from "../components/pagination/index";
 
 const mapStateToProps = state => {
   return {
@@ -18,7 +19,9 @@ let arrayResultMovie;
 
 export class Dashboard extends React.Component {
   state = {
-    type: ""
+    type: "",
+    currentPage: 1,
+    moviesPerPage: 5
   };
   componentDidMount() {
     this.props.fetchGenreList();
@@ -34,13 +37,23 @@ export class Dashboard extends React.Component {
     }
   };
 
+  handleClick = numberPage => {
+    this.setState({ currentPage: numberPage });
+  };
+
   render() {
+    const indexOfLastPost = this.state.currentPage * this.state.moviesPerPage;
+    const indexOfFirstPost = indexOfLastPost - this.state.moviesPerPage;
+    const currentMovieArray =
+      arrayResultMovie !== undefined &&
+      arrayResultMovie.slice(indexOfFirstPost, indexOfLastPost);
     return (
       <>
-        <Header />
+        <Header isMoviePage={false} />
         <Input onChange={value => this.handleChange(value)} />
-        {this.state.type !== ""
-          ? arrayResultMovie.map(movie => {
+        {this.state.type !== "" ? (
+          <>
+            {currentMovieArray.map(movie => {
               return (
                 <MovieCard
                   key={movie.id}
@@ -48,8 +61,16 @@ export class Dashboard extends React.Component {
                   genreList={this.props.genreList.genres}
                 />
               );
-            })
-          : undefined}
+            })}
+            <Pagination
+              moviesPerPage={this.state.moviesPerPage}
+              totalMovies={arrayResultMovie.length}
+              onClickLink={this.handleClick}
+            />
+          </>
+        ) : (
+          undefined
+        )}
       </>
     );
   }
