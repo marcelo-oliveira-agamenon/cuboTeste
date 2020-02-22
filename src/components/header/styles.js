@@ -15,7 +15,7 @@ export const ContainerText = styled.div`
 export const TextHeader = styled.h3`
   font-family: Abel, sans-serif;
   color: #63eadf;
-  font-size: 2.2rem;
+  font-size: 2.3vw;
   letter-spacing: 1px;
   font-weight: 100;
   margin: 0;

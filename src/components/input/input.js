@@ -14,7 +14,6 @@ const mapStateToProps = state => {
 
 export class Input extends React.Component {
   state = {
-    data: {},
     valueInput: ""
   };
 
@@ -31,7 +30,6 @@ export class Input extends React.Component {
   render() {
     return (
       <>
-        {console.log("input", this.props)}
         <ContainerInput>
           <TextInput
             type="text"

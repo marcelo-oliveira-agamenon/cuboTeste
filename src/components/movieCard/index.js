@@ -1,5 +1,21 @@
 import React from "react";
-import { ContainerMovieCard } from "./styles";
+import {
+  ContainerMovieCard,
+  TitleMovie,
+  DivImage,
+  DescriptionMovie,
+  PopularityMovie,
+  ContainerDiv,
+  ReleaseDateMovie,
+  GenreTagMovie,
+  GenreTagMovieDiv,
+  SecondDiv,
+  ThirdDiv,
+  FourDiv,
+  FiveDiv,
+  ImageTag
+} from "./styles";
+import { Link } from "react-router-dom";
 
 export function MovieCard(props) {
   const genres = props.genreList.filter(genre => {
@@ -13,26 +29,37 @@ export function MovieCard(props) {
     props.data.vote_average !== 0 ? props.data.vote_average * 10 + " %" : "N/A";
   return (
     <ContainerMovieCard>
-      {console.log("ajjj", props.data)}
-      <img
-        src={"http://image.tmdb.org/t/p/w185/" + props.data.poster_path}
-        alt="poster Movie"
-      />
-      <h3>{props.data.title}</h3>
-      <p>
-        {props.data.overview === ""
-          ? "Não há descrição para este filme"
-          : props.data.overview}
-      </p>
-      <h4>{props.data.release_date}</h4>
-      <h5>{popularity}</h5>
-      {genres.length === 1 ? (
-        <h5>{genres[0].name}</h5>
-      ) : (
-        genres.map(genre => {
-          return <h5>{genre.name}</h5>;
-        })
-      )}
+      <ContainerDiv>
+        <DivImage>
+          <ImageTag
+            src={"http://image.tmdb.org/t/p/w185/" + props.data.poster_path}
+            alt="poster Movie"
+          />
+        </DivImage>
+        <SecondDiv>
+          <ThirdDiv>
+            <PopularityMovie>{popularity}</PopularityMovie>
+            <TitleMovie>{props.data.title}</TitleMovie>
+          </ThirdDiv>
+          <ReleaseDateMovie>{props.data.release_date}</ReleaseDateMovie>
+          <FourDiv>
+            <DescriptionMovie>
+              {props.data.overview === ""
+                ? "Não há descrição para este filme"
+                : props.data.overview}
+            </DescriptionMovie>
+            <FiveDiv>
+              {genres.map(genre => {
+                return (
+                  <GenreTagMovieDiv key={genre.id}>
+                    <GenreTagMovie>{genre.name}</GenreTagMovie>
+                  </GenreTagMovieDiv>
+                );
+              })}
+            </FiveDiv>
+          </FourDiv>
+        </SecondDiv>
+      </ContainerDiv>
     </ContainerMovieCard>
   );
 }

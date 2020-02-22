@@ -21,6 +21,6 @@ export const TextInput = styled.input`
   border-radius: 16px;
   border-style: none;
   outline: none;
-  font-size: 0.8rem;
+  font-size: 0.9vw;
   font-family: Lato, sans-serif;
 `;

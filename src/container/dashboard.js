@@ -32,6 +32,7 @@ export class Dashboard extends React.Component {
           ? arrayResultMovie.map(movie => {
               return (
                 <MovieCard
+                  key={movie.id}
                   data={movie}
                   genreList={this.props.genreList[0].genres}
                 />
