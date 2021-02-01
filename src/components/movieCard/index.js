@@ -13,23 +13,26 @@ import {
   ThirdDiv,
   FourDiv,
   FiveDiv,
-  ImageTag
+  ImageTag,
 } from "./styles";
 import { Link } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import moment from "moment";
 
 export function MovieCard(props) {
-  const genres = props.genreList.filter(genre => {
+  const genres = props.genreList.filter((genre) => {
     for (let i = 0; props.data.genre_ids.length > i; i++) {
       if (props.data.genre_ids[i] === genre.id) {
         return genre.name;
       }
     }
+    return null;
   });
+
   const popularity =
     props.data.vote_average !== 0 ? props.data.vote_average * 10 + " %" : "N/A";
   const dateFormat = moment(props.data.release_date).format("DD/MM/YYYY");
+
   return (
     <ContainerMovieCard>
       {props.data === undefined || props.genreList.length === 0 ? (
@@ -40,8 +43,8 @@ export function MovieCard(props) {
             pathname: "/movie",
             state: {
               dataMovie: props.data,
-              genreList: genres
-            }
+              genreList: genres,
+            },
           }}
           style={{ textDecoration: "none" }}
         >
@@ -76,7 +79,7 @@ export function MovieCard(props) {
                     : props.data.overview}
                 </DescriptionMovie>
                 <FiveDiv>
-                  {genres.map(genre => {
+                  {genres.map((genre) => {
                     return (
                       <GenreTagMovieDiv key={genre.id}>
                         <GenreTagMovie>{genre.name}</GenreTagMovie>
