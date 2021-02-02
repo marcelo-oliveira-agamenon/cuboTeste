@@ -1,14 +1,29 @@
 import styled from "styled-components";
 
 export const ContainerDiv = styled.div`
-  width: 100%;
-  background-color: #f3f5f5;
-  margin-top: 5vh;
-  padding-bottom: 4vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+
+  .maindiv {
+    width: 90%;
+    margin-top: 5vh;
+    padding-bottom: 4vh;
+  }
+
+  .videos {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 50px;
+  }
 `;
 
 export const TitleDiv = styled.div`
   width: 100%;
+  height: 70px;
   display: inline-flex;
   background-color: #dbd8d8;
 `;
@@ -34,6 +49,7 @@ export const PreviewDiv = styled.div`
 export const TitleMovie = styled.h1`
   font-family: Lato, sans-serif;
   font-size: 1.7vw;
+  font-weight: 100;
   color: #1661b3;
 `;
 
@@ -82,6 +98,7 @@ export const GenreTagMovieDiv = styled.div`
 export const InfoDiv = styled.div`
   display: flex;
   justify-content: space-evenly;
+  margin-top: 30px;
 `;
 
 export const InfoComponentDiv = styled.div`
@@ -104,27 +121,51 @@ export const InfoTitleResponse = styled.h4`
 
 export const PopularityMovie = styled.h5`
   font-family: Abel, sans-serif;
-  font-size: 1.4vw;
+  font-size: 28px;
   color: #63eadf;
-  margin: 2vh 0 0 1.8vw;
+  width: 100px;
+  height: 100px;
+  background-color: #1661b3;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #63eadf;
+    width: 90px;
+    height: 90px;
+  }
+
+  h5 {
+    padding-top: 25px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #1661b3;
+    width: 80px;
+    height: 80px;
+  }
 `;
 
 export const DivImage = styled.div`
   display: inline-block;
   flex-grow: 2;
-  height: auto;
   width: auto;
 `;
 
 export const Image = styled.img`
-  height: 45vh;
-  width: 15vw;
+  height: 100%;
+  width: 100%;
 `;
 
 export const DivBlock = styled.div`
   display: inline-block;
   padding-left: 2vw;
-  float: left;
+  padding-right: 1vw;
   flex-grow: 2;
 `;
 

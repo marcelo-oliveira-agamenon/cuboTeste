@@ -12,30 +12,30 @@ const mapStateToProps = (state) => {
   };
 };
 
-let genreDecision = false;
-let genreID;
-
-function Input(props) {
+function Input(props, { page }) {
   const [valueInput, setValueInput] = useState("");
+  const [genreDecision, setGenreDecision] = useState(false);
+  const [genreID, setGenreID] = useState();
 
   const handleKeyPress = (event) => {
-    props.genreList.genres.map((genre) => {
+    props.genreList.genres.forEach((genre) => {
       if (valueInput === genre.name) {
-        genreDecision = true;
-        genreID = genre.id;
+        setGenreDecision(true);
+        setGenreID(genre.id);
       }
     });
+
     if (event.key === "Enter") {
       if (genreDecision) {
-        props.fetchGenreMovie(genreID, 2).then(() => {
+        props.fetchGenreMovie(genreID, page).then(() => {
           props.onChange("genre");
         });
-        genreDecision = false;
+        setGenreDecision(false);
       } else {
-        props.fetchSearchMovie(this.state.valueInput, 1).then(() => {
+        props.fetchSearchMovie(valueInput, page).then(() => {
           props.onChange("search");
         });
-        genreDecision = false;
+        setGenreDecision(false);
       }
     }
   };

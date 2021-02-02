@@ -1,7 +1,12 @@
 import React from "react";
-import { DivNumbers, Numbers } from "./styles";
+import { DivNumbers } from "./styles";
 
-const Pagination = ({ moviesPerPage, totalMovies, onClickLink }) => {
+const Pagination = ({
+  moviesPerPage,
+  totalMovies,
+  onClickLink,
+  currentPage,
+}) => {
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalMovies / moviesPerPage); i++) {
@@ -12,9 +17,19 @@ const Pagination = ({ moviesPerPage, totalMovies, onClickLink }) => {
     <DivNumbers>
       {pageNumbers.map((number) => {
         return (
-          <Numbers key={number} onClick={() => onClickLink(number)}>
-            {number}
-          </Numbers>
+          <div
+            key={number}
+            onClick={() => onClickLink(number)}
+            className={currentPage === number ? "atualPage" : "page"}
+          >
+            {currentPage === number ? (
+              <div>
+                <p>{number}</p>
+              </div>
+            ) : (
+              <h5>{number}</h5>
+            )}
+          </div>
         );
       })}
     </DivNumbers>

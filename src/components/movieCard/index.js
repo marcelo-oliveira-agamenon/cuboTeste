@@ -68,7 +68,11 @@ export function MovieCard(props) {
             </DivImage>
             <SecondDiv>
               <ThirdDiv>
-                <PopularityMovie>{popularity}</PopularityMovie>
+                <PopularityMovie>
+                  <div>
+                    <h5>{popularity}</h5>
+                  </div>
+                </PopularityMovie>
                 <TitleMovie>{props.data.title}</TitleMovie>
               </ThirdDiv>
               <ReleaseDateMovie>{dateFormat}</ReleaseDateMovie>

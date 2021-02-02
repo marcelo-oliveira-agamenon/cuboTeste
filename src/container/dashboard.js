@@ -15,60 +15,60 @@ const mapStateToProps = (state) => {
   };
 };
 
-let arrayResultMovie;
-
 function Dashboard(props) {
   const [type, setType] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [moviesPerPage, setMoviesPerPage] = useState(5);
+  const moviesPerPage = 5;
+  const [arrayResultMovie, setArrayResultMovie] = useState([]);
 
   useEffect(() => {
     props.fetchGenreList();
-  }, [props]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChange = (value) => {
+    console.log(value, props);
     if (value === "search") {
-      arrayResultMovie = props.searchMovie.results;
+      setArrayResultMovie(props.searchMovie.results);
       setType(value);
     } else if (value === "genre") {
-      arrayResultMovie = props.dataMovie.results;
+      setArrayResultMovie(props.dataMovie.results);
       setType(value);
     }
   };
 
-  const handleClick = (numberPage) => {
-    setCurrentPage(numberPage);
-  };
-
   const indexOfLastPost = currentPage * moviesPerPage;
   const indexOfFirstPost = indexOfLastPost - moviesPerPage;
-  const currentMovieArray =
-    arrayResultMovie !== undefined &&
-    arrayResultMovie.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
     <>
       <Header isMoviePage={false} />
-
-      <Input onChange={(value) => handleChange(value)} />
+      {console.log(arrayResultMovie)}
+      <Input onChange={(value) => handleChange(value)} page={currentPage} />
       {type !== "" ? (
         <>
-          {currentMovieArray.map((movie) => {
-            return (
-              <MovieCard
-                key={movie.id}
-                data={movie}
-                genreList={props.genreList.genres}
-              />
-            );
-          })}
+          {arrayResultMovie &&
+            arrayResultMovie.length > 0 &&
+            arrayResultMovie
+              .slice(indexOfFirstPost, indexOfLastPost)
+              .map((movie) => {
+                return (
+                  <MovieCard
+                    key={movie.id}
+                    data={movie}
+                    genreList={props.genreList.genres}
+                  />
+                );
+              })}
           <Pagination
+            currentPage={currentPage}
             moviesPerPage={moviesPerPage}
-            totalMovies={arrayResultMovie.length}
-            onClickLink={(number) => handleClick(number)}
+            totalMovies={arrayResultMovie?.length}
+            onClickLink={(number) => setCurrentPage(number)}
           />
         </>
-      ) : undefined}
+      ) : null}
     </>
   );
 }

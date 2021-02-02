@@ -1,84 +1,98 @@
-import axios from "axios";
+import api from "../config";
 
-const apiPath = "https://api.themoviedb.org/3";
-const apiToken = "96d9ff74ca950bb80074450659529bbc";
+const apiToken = process.env.REACT_APP_API_KEY;
 
 //functions
 export function fetchSearchMovie(searchString, page) {
-  return function(dispatch) {
-    return axios
+  return function (dispatch) {
+    return api
       .get(
-        `${apiPath}/search/movie?api_key=${apiToken}&language=pt-BR&query=${searchString}&page=${page}`
+        `/search/movie?api_key=${apiToken}&language=pt-BR&query=${searchString}&page=${page}`
       )
-      .then(response => {
+      .then((response) => {
         dispatch({
           type: "searchMovie",
-          payload: response.data
+          payload: response.data,
         });
+
+        return Promise.resolve();
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: "error",
-          payload: error
+          payload: error,
         });
       });
   };
 }
 
 export function fetchGenreList() {
-  return function(dispatch) {
-    return axios
-      .get(`${apiPath}/genre/movie/list?api_key=${apiToken}&language=pt-BR`)
-      .then(response => {
+  return function (dispatch) {
+    return api
+      .get(`/genre/movie/list?api_key=${apiToken}&language=pt-BR`)
+      .then((response) => {
         dispatch({
           type: "genreList",
-          payload: response.data
+          payload: response.data,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: "error",
-          payload: error
+          payload: error,
         });
       });
   };
 }
 
 export function fetchGenreMovie(idGenre, page) {
-  return function(dispatch) {
-    return axios
+  return function (dispatch) {
+    return api
       .get(
-        `${apiPath}/discover/movie?api_key=${apiToken}&language=pt-BR&sort_by=popularity.asc&page=${page}&with_genres=${idGenre}`
+        `/discover/movie?api_key=${apiToken}&language=pt-BR&sort_by=popularity.asc&page=${page}&with_genres=${idGenre}`
       )
-      .then(response => {
+      .then((response) => {
         dispatch({
           type: "dataMovie",
-          payload: response.data
+          payload: response.data,
         });
+
+        return Promise.resolve();
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: "error",
-          payload: error
+          payload: error,
         });
       });
   };
 }
 
 export function fetchMovieDetails(movieID) {
-  return function(dispatch) {
-    return axios
-      .get(`${apiPath}/movie/${movieID}?api_key=${apiToken}&language=pt-BR`)
-      .then(response => {
+  return function (dispatch) {
+    let videos;
+    api
+      .get(`/movie/${movieID}/videos?api_key=${apiToken}&language=en-US`)
+      .then((response) => {
+        videos = response.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    //&append_to_response=videos
+    return api
+      .get(`/movie/${movieID}?api_key=${apiToken}&language=pt-BR`)
+      .then((response) => {
+        let data = { ...response.data, videos: videos };
         dispatch({
           type: "movieDetails",
-          payload: response.data
+          payload: data,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: "error",
-          payload: error
+          payload: error,
         });
       });
   };

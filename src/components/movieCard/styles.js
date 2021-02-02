@@ -25,23 +25,51 @@ export const TitleMovie = styled.h3`
   color: #63eadf;
   font-size: 2.1vw;
   font-weight: 100;
-  margin: 0 0 0 2.1vw;
+  margin-left: 100px;
 `;
 
 export const DescriptionMovie = styled.p`
   font-family: Lato, sans-serif;
   font-size: 0.8vw;
-  font-weight: 500;
-  margin: 0;
+  font-weight: 600;
+  margin: 15px;
   color: #959393;
   padding: 10px;
 `;
 
-export const PopularityMovie = styled.h5`
+export const PopularityMovie = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: Abel, sans-serif;
   font-size: 1.4vw;
+  background-color: #1661b3;
+  font-weight: 100;
   color: #63eadf;
-  margin: 2vh 0 0 1.8vw;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  margin-left: 10px;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #63eadf;
+    width: 70px;
+    height: 70px;
+  }
+
+  h5 {
+    padding-top: 18px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #1661b3;
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 export const ReleaseDateMovie = styled.h4`
@@ -54,13 +82,12 @@ export const ReleaseDateMovie = styled.h4`
 
 export const GenreTagMovie = styled.h5`
   font-family: Abel, sans-serif;
-  font-size: 0.7vw;
+  font-size: 15px;
   color: #1661b3;
   font-weight: 200;
-  margin-top: 1vh;
   border: 1px solid #1661b3;
-  border-radius: 10px;
-  padding: 2px 5px;
+  border-radius: 18px;
+  padding: 2px 12px;
   background-color: #fefefe;
 `;
 

@@ -29,6 +29,7 @@ import { connect } from "react-redux";
 import { fetchMovieDetails } from "../../store/fetch";
 import NumberFormat from "react-number-format";
 import Loader from "react-loader-spinner";
+import ReactPlayer from "react-player";
 
 const mapStateToProps = (state) => {
   return {
@@ -41,7 +42,9 @@ function MoviePage(props) {
   useEffect(() => {
     const { dataMovie } = props.location.state;
     props.fetchMovieDetails(dataMovie.id);
-  }, [props]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { dataMovie, genreList } = props.location.state;
   const { movieDetails } = props;
@@ -56,124 +59,145 @@ function MoviePage(props) {
 
   return (
     <>
+      {console.log(movieDetails)}
       <Header isMoviePage={true} />
       {dataMovie === undefined || movieDetails === undefined ? (
         <Loader type="Oval" color="#1661b3" height={"5vh"} width={"5vw"} />
       ) : (
         <ContainerDiv>
-          <TitleDiv>
-            <SubTitleDiv1>
-              <TitleMovie>{dataMovie.title}</TitleMovie>
-            </SubTitleDiv1>
+          <div className="maindiv">
+            <TitleDiv>
+              <SubTitleDiv1>
+                <TitleMovie>{dataMovie.title}</TitleMovie>
+              </SubTitleDiv1>
 
-            <SubTitleDiv2>
-              <ReleaseDataMovie>{releaseDateFormat}</ReleaseDataMovie>
-            </SubTitleDiv2>
-          </TitleDiv>
+              <SubTitleDiv2>
+                <ReleaseDataMovie>{releaseDateFormat}</ReleaseDataMovie>
+              </SubTitleDiv2>
+            </TitleDiv>
 
-          <PreviewDiv>
-            <DivBlock>
-              <DescriptionTitle>Sinopse</DescriptionTitle>
-              <LineSeparator />
-              <DescriptionMovie>
-                {dataMovie.overview === ""
-                  ? "Não há descrição para este filme"
-                  : dataMovie.overview}
-              </DescriptionMovie>
+            <PreviewDiv>
+              <DivBlock>
+                <DescriptionTitle>Sinopse</DescriptionTitle>
+                <LineSeparator />
+                <DescriptionMovie>
+                  {dataMovie.overview === ""
+                    ? "Não há descrição para este filme"
+                    : dataMovie.overview}
+                </DescriptionMovie>
 
-              <DescriptionTitle>Informações</DescriptionTitle>
-              <LineSeparator />
-              <InfoDiv>
-                <InfoComponentDiv>
-                  <InfoTitle>Situação</InfoTitle>
-                  <InfoTitleResponse>{dateLaunch}</InfoTitleResponse>
-                </InfoComponentDiv>
+                <DescriptionTitle>Informações</DescriptionTitle>
+                <LineSeparator />
+                <InfoDiv>
+                  <InfoComponentDiv>
+                    <InfoTitle>Situação</InfoTitle>
+                    <InfoTitleResponse>{dateLaunch}</InfoTitleResponse>
+                  </InfoComponentDiv>
 
-                <InfoComponentDiv>
-                  <InfoTitle>Idioma</InfoTitle>
-                  <InfoTitleResponse>
-                    {movieDetails.spoken_languages !== undefined
-                      ? movieDetails.spoken_languages.map((lang) => {
-                          return lang.name + " ";
-                        })
-                      : null}
-                  </InfoTitleResponse>
-                </InfoComponentDiv>
+                  <InfoComponentDiv>
+                    <InfoTitle>Idioma</InfoTitle>
+                    <InfoTitleResponse>
+                      {movieDetails.spoken_languages !== undefined
+                        ? movieDetails.spoken_languages.map((lang) => {
+                            return lang.name + " ";
+                          })
+                        : null}
+                    </InfoTitleResponse>
+                  </InfoComponentDiv>
 
-                <InfoComponentDiv>
-                  <InfoTitle>Duração</InfoTitle>
-                  <InfoTitleResponse>{movieTime}</InfoTitleResponse>
-                </InfoComponentDiv>
+                  <InfoComponentDiv>
+                    <InfoTitle>Duração</InfoTitle>
+                    <InfoTitleResponse>{movieTime}</InfoTitleResponse>
+                  </InfoComponentDiv>
 
-                <InfoComponentDiv>
-                  <InfoTitle>Orçamento</InfoTitle>
-                  <InfoTitleResponse>
-                    <NumberFormat
-                      value={movieDetails.budget}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      prefix={"$"}
-                    />
-                  </InfoTitleResponse>
-                </InfoComponentDiv>
+                  <InfoComponentDiv>
+                    <InfoTitle>Orçamento</InfoTitle>
+                    <InfoTitleResponse>
+                      <NumberFormat
+                        value={movieDetails.budget}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        prefix={"$"}
+                      />
+                    </InfoTitleResponse>
+                  </InfoComponentDiv>
 
-                <InfoComponentDiv>
-                  <InfoTitle>Receita</InfoTitle>
-                  <InfoTitleResponse>
-                    <NumberFormat
-                      value={movieDetails.revenue}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      prefix={"$"}
-                    />
-                  </InfoTitleResponse>
-                </InfoComponentDiv>
+                  <InfoComponentDiv>
+                    <InfoTitle>Receita</InfoTitle>
+                    <InfoTitleResponse>
+                      <NumberFormat
+                        value={movieDetails.revenue}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        prefix={"$"}
+                      />
+                    </InfoTitleResponse>
+                  </InfoComponentDiv>
 
-                <InfoComponentDiv>
-                  <InfoTitle>Lucro</InfoTitle>
-                  <InfoTitleResponse>
-                    <NumberFormat
-                      value={movieDetails.revenue - movieDetails.budget}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      prefix={"$"}
-                    />
-                  </InfoTitleResponse>
-                </InfoComponentDiv>
-              </InfoDiv>
+                  <InfoComponentDiv>
+                    <InfoTitle>Lucro</InfoTitle>
+                    <InfoTitleResponse>
+                      <NumberFormat
+                        value={movieDetails.revenue - movieDetails.budget}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        prefix={"$"}
+                      />
+                    </InfoTitleResponse>
+                  </InfoComponentDiv>
+                </InfoDiv>
 
-              <GenreTagMovieDiv>
-                <DivLine1>
-                  {genreList.map((genre) => {
-                    return (
-                      <GenreTagMovie key={genre.id}>{genre.name}</GenreTagMovie>
-                    );
-                  })}
-                </DivLine1>
-                <DivLine2>
-                  <PopularityMovie>{popularity}</PopularityMovie>
-                </DivLine2>
-              </GenreTagMovieDiv>
-            </DivBlock>
+                <GenreTagMovieDiv>
+                  <DivLine1>
+                    {genreList.map((genre) => {
+                      return (
+                        <GenreTagMovie key={genre.id}>
+                          {genre.name}
+                        </GenreTagMovie>
+                      );
+                    })}
+                  </DivLine1>
 
-            <DivImage>
-              {dataMovie.poster_path === undefined ? (
-                <Loader
-                  type="Oval"
-                  color="#1661b3"
-                  height={"5vh"}
-                  width={"5vw"}
+                  <DivLine2>
+                    <PopularityMovie>
+                      <div>
+                        <h5>{popularity}</h5>
+                      </div>
+                    </PopularityMovie>
+                  </DivLine2>
+                </GenreTagMovieDiv>
+              </DivBlock>
+
+              <DivImage>
+                {dataMovie.poster_path === undefined ? (
+                  <Loader
+                    type="Oval"
+                    color="#1661b3"
+                    height={"5vh"}
+                    width={"5vw"}
+                  />
+                ) : (
+                  <Image
+                    src={
+                      "http://image.tmdb.org/t/p/w185/" + dataMovie.poster_path
+                    }
+                    alt="poster Movie"
+                  />
+                )}
+              </DivImage>
+            </PreviewDiv>
+          </div>
+
+          <div className="videos">
+            {movieDetails.videos?.results.map((video) => {
+              return (
+                <ReactPlayer
+                  key={video.id}
+                  url={`https://www.youtube.com/watch?v=${video.key}`}
                 />
-              ) : (
-                <Image
-                  src={
-                    "http://image.tmdb.org/t/p/w185/" + dataMovie.poster_path
-                  }
-                  alt="poster Movie"
-                />
-              )}
-            </DivImage>
-          </PreviewDiv>
+              );
+            })}
+          </div>
         </ContainerDiv>
       )}
     </>

@@ -3,29 +3,29 @@ const initialState = {
   genreList: [],
   dataMovie: [],
   movieDetails: [],
-  error: []
+  error: [],
 };
 
 function rootReducer(state = initialState, action) {
   if (action.type === "dataMovie") {
     return Object.assign({}, state, {
-      dataMovie: action.payload
+      dataMovie: action.payload,
     });
   } else if (action.type === "genreList") {
     return Object.assign({}, state, {
-      genreList: action.payload
+      genreList: action.payload,
     });
   } else if (action.type === "searchMovie") {
     return Object.assign({}, state, {
-      searchMovie: action.payload
+      searchMovie: action.payload,
     });
   } else if (action.type === "movieDetails") {
     return Object.assign({}, state, {
-      movieDetails: action.payload
+      movieDetails: action.payload,
     });
   } else if (action.type === "error") {
     return Object.assign({}, state, {
-      error: action.payload
+      error: action.payload,
     });
   }
   return state;
